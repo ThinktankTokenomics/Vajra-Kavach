@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vajra Kavach - Decentralized Weather Insurance</title>
+
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Noto+Sans+Devanagari:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+
+
+    <canvas id="threejs-canvas"></canvas>
+    <div id="birds"></div>
+
+    <div class="lightning-flash" id="lightningFlash"></div>
+    <div class="top-gradient-effect"></div>
+    <div class="top-effects" id="topEffects"></div>
+
+    <div class="controls-container">
+        <div class="language-toggle">
+            <button class="language-btn english active" onclick="changeLanguage('english')">English</button>
+            <button class="language-btn hindi" onclick="changeLanguage('hindi')">हिंदी</button>
+        </div>
+        <button class="audio-toggle-btn" id="audioToggleBtn" onclick="toggleRainSound()">
+            <i class="fas fa-volume-mute"></i> <span class="english">Sound</span><span class="hindi">ध्वनि</span>
+        </button>
+    </div>
+
+    <button class="mobile-menu-btn" onclick="openMobileMenu()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <div class="logo">
+                <i class="fas fa-cloud-showers-heavy"></i>
+                <span class="english">Vajra Kavach</span>
+                <span class="hindi">वज्र कवच</span>
+            </div>
+            <button class="mobile-menu-close" onclick="closeMobileMenu()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav class="mobile-nav">
+            <ul>
+                <li><a href="#features" class="english" onclick="closeMobileMenu()">Features</a><a href="#features" class="hindi" onclick="closeMobileMenu()">विशेषताएं</a></li>
+                <li><a href="#how-it-works" class="english" onclick="closeMobileMenu()">How It Works</a><a href="#how-it-works" class="hindi" onclick="closeMobileMenu()">यह काम किस प्रकार करता है</a></li>
+                <li><a href="#pricing" class="english" onclick="closeMobileMenu()">Pricing</a><a href="#pricing" class="hindi" onclick="closeMobileMenu()">मूल्य निर्धारण</a></li>
+                <li><a href="#testimonials" class="english" onclick="closeMobileMenu()">Testimonials</a><a href="#testimonials" class="hindi" onclick="closeMobileMenu()">प्रशंसापत्र</a></li>
+                <li><a href="#farmer-resources" class="english" onclick="closeMobileMenu()">Farmer Resources</a><a href="#farmer-resources" class="hindi" onclick="closeMobileMenu()">किसान संसाधन</a></li>
+                <li><a href="#contact" class="english" onclick="closeMobileMenu()">Contact</a><a href="#contact" class="hindi" onclick="closeMobileMenu()">संपर्क करें</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closeMobileMenu()"></div>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-cloud-showers-heavy"></i>
+                    <span class="english">Vajra Kavach</span>
+                    <span class="hindi">वज्र कवच</span>
+                </div>
+                <p class="tagline english">Decentralized Weather Insurance for Resilient Farming</p>
+                <p class="tagline hindi">लचीली खेती के लिए विकेंद्रीकृत मौसम बीमा</p>
+
+                <div class="problem-solution">
+                    <h3 class="english">🌾 Decentralized Weather Insurance for Farmers — Akshat's Vision</h3>
+                    <h3 class="hindi">🌾 किसानों के लिए विकेंद्रीकृत मौसम बीमा — अक्षत की दृष्टि</h3>
+
+                    <div class="problem">
+                        <h4 class="english">Problem</h4>
+                        <h4 class="hindi">समस्या</h4>
+                        <ul>
+                            <li class="english">Traditional crop insurance in India is slow, inefficient, and often unreliable.</li>
+                            <li class="hindi">भारत में पारंपरिक फसल बीमा धीमा, अक्षम और अक्सर अविश्वसनीय होता है।</li>
+                            <li class="english">Farmers suffer losses due to weather events (drought, excess rain, hail) but don't get timely or fair payouts.</li>
+                            <li class="hindi">किसान मौसम की घटनाओं (सूखा, अत्यधिक बारिश, ओलावृष्टि) के कारण नुकसान उठाते हैं लेकिन उन्हें समय पर या उचित मुआवजा नहीं मिलता है।</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution">
+                        <h4 class="english">✅ Your Solution: A Smart, Blockchain-Based Weather Insurance App</h4>
+                        <h4 class="hindi">✅ आपका समाधान: एक स्मार्ट, ब्लॉकचेन-आधारित मौसम बीमा ऐप</h4>
+
+                        <div class="component">
+                            <h4><i class="fas fa-robot"></i><span class="english">Smart Contract</span><span class="hindi">स्मार्ट कॉन्ट्रैक्ट</span></h4>
+                            <ul>
+                                <li class="english">Automates the insurance process.</li>
+                                <li class="hindi">बीमा प्रक्रिया को स्वचालित करता है।</li>
+                                <li class="english">Triggers payouts instantly when weather thresholds are met.</li>
+                                <li class="hindi">जब मौसम सीमा पूरी होती है तो तुरंत भुगतान ट्रिगर करता है।</li>
+                                <li class="english">No manual claims or delays.</li>
+                                <li class="hindi">कोई मैनुअल दावे या देरी नहीं।</li>
+                            </ul>
+                        </div>
+
+                        <div class="component">
+                            <h4><i class="fas fa-link"></i><span class="english">Blockchain</span><span class="hindi">ब्लॉकचेन</span></h4>
+                            <ul>
+                                <li class="english">Brings transparency, no corruption or middlemen.</li>
+                                <li class="hindi">पारदर्शिता लाता है, कोई भ्रष्टाचार या मध्यस्थ नहीं।</li>
+                                <li class="english">Farmers can trust the process and verify everything.</li>
+                                <li class="hindi">किसान प्रक्रिया पर विश्वास कर सकते हैं और सब कुछ सत्यापित कर सकते हैं।</li>
+                            </ul>
+                        </div>
+
+                        <div class="component">
+                            <h4><i class="fas fa-satellite-dish"></i><span class="english">Oracle Integration</span><span class="hindi">ऑरेकल एकीकरण</span></h4>
+                            <ul>
+                                <li class="english">Pulls real-time weather data from trusted sources (like Chainlink, RedStone, or RainMaker).</li>
+                                <li class="hindi">विश्वसनीय स्रोतों (जैसे चेनलिंक, रेडस्टोन, या रेनमेकर) से वास्तविक समय मौसम डेटा प्राप्त करता है।</li>
+                                <li class="hindi">डेटा के आधार पर स्मार्ट कॉन्ट्रैक्ट क्रियाएं ट्रिगर करता है (उदाहरण के लिए, यदि 2 सप्ताह तक वर्षा < 50mm → भुगतान ट्रिगर होता है)।</li>
+                            </ul>
+                        </div>
+
+                        <div class="component">
+                            <h4><i class="fas fa-coins"></i><span class="english">Premium Utilization Strategy</span><span class="hindi">प्रीमियम उपयोग रणनीति</span></h4>
+                            <ul>
+                                <li class="english">The premiums collected can be staked or invested (e.g., in ETH staking or BTC mining).</li>
+                                <li class="hindi">एकत्रित प्रीमियम को स्टेक या निवेश किया जा सकता है (उदाहरण के लिए, ETH स्टेकिंग या BTC माइनिंग में)।</li>
+                                <li class="english">Generates passive yield to increase the sustainability of the insurance pool.</li>
+                                <li class="hindi">बीमा पूल की स्थिरता बढ़ाने के लिए निष्क्रिय आय उत्पन्न करता है।</li>
+                            </ul>
+                        </div>
+
+                        <div class="component">
+                            <h4><i class="fas fa-mobile-alt"></i><span class="english">Mobile App Frontend</span><span class="hindi">मोबाइल ऐप फ्रंटएंड</span></h4>
+                            <ul>
+                                <li class="english">Simple UI in Hindi/local language.</li>
+                                <li class="hindi">हिंदी/स्थानीय भाषा में सरल UI।</li>
+                                <li class="english">Farmers input crop type, land area, and location → get automated quotes and coverage.</li>
+                                <li class="hindi">किसान फसल प्रकार, भूमि क्षेत्र, और स्थान दर्ज करते हैं → स्वचालित उद्धरण और कवरेज प्राप्त करते हैं।</li>
+                                <li class="english">Dashboard shows live policy status, potential payout triggers, etc.</li>
+                                <li class="hindi">डैशबोर्ड लाइव पॉलिसी स्थिति, संभावित भुगतान ट्रिगर आदि दिखाता है।</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="benefits">
+                        <h4 class="english">🧠 Why It's Powerful:</h4>
+                        <h4 class="hindi">🧠 यह क्यों शक्तिशाली है:</h4>
+
+                        <table class="benefit-table">
+                            <tr>
+                                <th class="english">Feature</th>
+                                <th class="hindi">विशेषता</th>
+                                <th class="english">Benefit</th>
+                                <th class="hindi">लाभ</th>
+                            </tr>
+                            <tr>
+                                <td class="english">☁️ Data-driven</td>
+                                <td class="hindi">☁️ डेटा-चालित</td>
+                                <td class="english">No human inspection needed — pure weather data.</td>
+                                <td class="hindi">कोई मानव निरीक्षण की आवश्यकता नहीं — शुद्ध मौसम डेटा।
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="english">⏱️ Instant Payout</td>
+                                <td class="hindi">⏱️ तत्काल भुगतान</td>
+                                <td class="english">Removes 3–6 month waiting period of traditional insurance.</td>
+                                <td class="hindi">पारंपरिक बीमा की 3–6 महीने की प्रतीक्षा अवधि को समाप्त करता है।</td>
+                            </tr>
+                            <tr>
+                                <td class="english">🧾 Transparent</td>
+                                <td class="hindi">🧾 पारदर्शी</td>
+                                <td class="english">Farmers can view policy terms and triggers on-chain.</td>
+                                <td class="hindi">किसान चेन पर पॉलिसी शर्तों और ट्रिगर को देख सकते हैं।</td>
+                            </tr>
+                            <tr>
+                                <td class="english">🌐 Scalable</td>
+                                <td class="hindi">🌐 स्केलेबल</td>
+                                <td class="english">Can start with a small region/few districts and expand.</td>
+                                <td class="hindi">एक छोटे क्षेत्र/कुछ जिलों से शुरू कर सकता है और विस्तार कर सकता है।</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="header-btns">
+                    <a href="#pricing" class="btn btn-primary english"><i class="fas fa-shield-alt" style="margin-right: 10px;"></i> Secure Your Future</a>
+                    <a href="#pricing" class="btn btn-primary hindi"><i class="fas fa-shield-alt" style="margin-right: 10px;"></i> अपना भविष्य सुरक्षित करें</a>
+                    <a href="#how-it-works" class="btn btn-outline english"><i class="fas fa-info-circle" style="margin-right: 10px;"></i> Discover How</a>
+                    <a href="#how-it-works" class="btn btn-outline hindi"><i class="fas fa-info-circle" style="margin-right: 10px;"></i> जानें कैसे</a>
+                </div>
+            </div>
+        </div>
+        <div class="wave"></div>
+    </header>
+
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="english">Our Commitment in the Storm</h2>
+                <h2 class="hindi">तूफान में हमारी प्रतिबद्धता</h2>
+                <p class="english">Advanced technology providing swift, transparent support when it's needed most, aiding your recovery and resilience.</p>
+                <p class="hindi">उन्नत तकनीक जो सबसे ज्यादा जरूरत पड़ने पर तेजी से, पारदर्शी सहायता प्रदान करती है, आपकी पुनर्प्राप्ति और लचीलापन में सहायता करती है।</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card fade-in" style="animation-delay: 0.1s;">
+                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                    <h3 class="english">Rapid Payouts</h3>
+                    <h3 class="hindi">तेजी से भुगतान</h3>
+                    <p class="english">Smart contracts trigger automated payments instantly during adverse weather. No delays, crucial for quick recovery.</p>
+                    <p class="hindi">प्रतिकूल मौसम के दौरान स्मार्ट कॉन्ट्रैक्ट स्वचालित रूप से भुगतान शुरू करते हैं। कोई देरी नहीं, त्वरित वसूली के लिए महत्वपूर्ण।</p>
+                </div>
+                <div class="feature-card fade-in" style="animation-delay: 0.3s;">
+                    <div class="feature-icon"><i class="fas fa-eye"></i></div>
+                    <h3 class="english">Crystal Clear Transparency</h3>
+                    <h3 class="hindi">पूरी तरह पारदर्शिता</h3>
+                    <p class="english">Our decentralized system ensures every transaction is verifiable, building trust during challenging times.</p>
+                    <p class="hindi">हमारी विकेंद्रीकृत प्रणाली यह सुनिश्चित करती है कि प्रत्येक लेनदेन सत्यापन योग्य हो, जिससे चुनौतीपूर्ण समय में विश्वास पैदा हो।</p>
+                </div>
+                <div class="feature-card disaster-recovery fade-in" style="animation-delay: 0.5s;">
+                    <div class="feature-icon"><i class="fas fa-life-ring"></i></div>
+                    <h3 class="english">Recovery Assistance</h3>
+                    <h3 class="hindi">पुनर्प्राप्ति सहायता</h3>
+                    <p class="english">More than just payouts – access vital resources and expert guidance to rebuild and strengthen your farm.</p>
+                    <p class="hindi">सिर्फ भुगतान से कहीं ज़्यादा - अपने खेत के पुनर्निर्माण और मजबूती के लिए महत्वपूर्ण संसाधनों और विशेषज्ञ मार्गदर्शन तक पहुँचें।</p>
+                </div>
+                <div class="feature-card fade-in" style="animation-delay: 0.7s;">
+                    <div class="feature-icon"><i class="fas fa-satellite-dish"></i></div>
+                    <h3 class="english">Precision Weather Data</h3>
+                    <h3 class="hindi">सटीक मौसम डेटा</h3>
+                    <p class="english">Utilizing hyper-accurate data from IMD & NASA, secured by Chainlink, for fair weather impact assessment.</p>
+                    <p class="hindi">आईएमडी और नासा से अति-सटीक डेटा का उपयोग, चेनलिंक द्वारा सुरक्षित, मौसम के प्रभाव का निष्पक्ष मूल्यांकन।</p>
+                </div>
+                <div class="feature-card fade-in" style="animation-delay: 0.9s;">
+                    <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3 class="english">Always Accessible</h3>
+                    <h3 class="hindi">हमेशा सुलभ</h3>
+                    <p class="english">Manage your policy and receive crucial updates effortlessly via our user-friendly mobile application.</p>
+                    <p class="hindi">हमारे उपयोगकर्ता के अनुकूल मोबाइल एप्लिकेशन के माध्यम से आसानी से अपनी पॉलिसी प्रबंधित करें और महत्वपूर्ण अपडेट प्राप्त करें।</p>
+                </div>
+                <div class="feature-card fade-in" style="animation-delay: 1.1s;">
+                    <div class="feature-icon"><i class="fas fa-map-marked-alt"></i></div>
+                    <h3 class="english">Region-Specific Shield</h3>
+                    <h3 class="hindi">क्षेत्र-विशिष्ट ढाल</h3>
+                    <p class="english">Insurance solutions meticulously customized for your specific crop and local climatic vulnerabilities.</p>
+                    <p class="hindi">आपकी विशिष्ट फसल और स्थानीय जलवायु कमजोरियों के लिए सावधानीपूर्वक अनुकूलित बीमा समाधान।</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="english">How Our Blockchain Weather Insurance Works</h2>
+                <h2 class="hindi">हमारा ब्लॉकचेन मौसम बीमा कैसे काम करता है</h2>
+                <p class="english">A seamless process from registration to claim, all automated and transparent.</p>
+                <p class="hindi">पंजीकरण से दावा तक एक निर्बाध प्रक्रिया, सभी स्वचालित और पारदर्शी।</p>
+            </div>
+
+            <div class="component">
+                <h4><i class="fas fa-user-plus"></i><span class="english">1. Registration & Policy Selection</span><span class="hindi">1. पंजीकरण और पॉलिसी चयन</span></h4>
+                <ul>
+                    <li class="english">Farmers register via mobile app with basic details (crop type, land area, location).</li>
+                    <li class="hindi">किसान मोबाइल ऐप के माध्यम से मूल विवरण (फसल प्रकार, भूमि क्षेत्र, स्थान) के साथ पंजीकरण करते हैं।</li>
+                    <li class="english">AI-driven system suggests optimal coverage based on historical weather data and risk factors.</li>
+                    <li class="hindi">ऐतिहासिक मौसम डेटा और जोखिम कारकों के आधार पर एआई-चालित प्रणाली इष्टतम कवरेज का सुझाव देती है।</li>
+                    <li class="english">Smart contract is deployed with selected policy terms.</li>
+                    <li class="hindi">चयनित पॉलिसी शर्तों के साथ स्मार्ट कॉन्ट्रैक्ट तैनात किया जाता है।</li>
+                </ul>
+            </div>
+
+            <div class="component">
+                <h4><i class="fas fa-file-contract"></i><span class="english">2. Premium Payment & Policy Activation</span><span class="hindi">2. प्रीमियम भुगतान और पॉलिसी सक्रियण</span></h4>
+                <ul>
+                    <li class="english">Farmers pay premium via UPI, bank transfer, or crypto.</li>
+                    <li class="hindi">किसान यूपीआई, बैंक ट्रांसफर, या क्रिप्टो के माध्यम से प्रीमियम का भुगतान करते हैं।</li>
+                    <li class="english">Policy is recorded on blockchain with timestamp and unique ID.</li>
+                    <li class="hindi">पॉलिसी को टाइमस्टैम्प और अद्वितीय आईडी के साथ ब्लॉकचेन पर रिकॉर्ड किया जाता है।</li>
+                    <li class="english">Automated confirmation sent to farmer's mobile and registered email.</li>
+                    <li class="hindi">स्वचालित पुष्टिकरण किसान के मोबाइल और पंजीकृत ईमेल पर भेजा जाता है।</li>
+                </ul>
+            </div>
+
+            <div class="component">
+                <h4><i class="fas fa-cloud-rain"></i><span class="english">3. Real-Time Weather Monitoring</span><span class="hindi">3. वास्तविक समय मौसम निगरानी</span></h4>
+                <ul>
+                    <li class="english">Oracle services continuously feed hyperlocal weather data to smart contracts.</li>
+                    <li class="hindi">ऑरेकल सेवाएं लगातार स्मार्ट कॉन्ट्रैक्ट्स को हाइपरलोकल मौसम डेटा प्रदान करती हैं।</li>
+                    <li class="hindi">डेटा के आधार पर स्मार्ट कॉन्ट्रैक्ट क्रियाएं ट्रिगर करता है (उदाहरण के लिए, यदि 2 सप्ताह तक वर्षा < 50mm → भुगतान ट्रिगर होता है)।</li>
+                </ul>
+            </div>
+
+            <div class="component">
+                <h4><i class="fas fa-bolt"></i><span class="english">4. Automatic Claim Triggering</span><span class="hindi">4. स्वचालित दावा ट्रिगरिंग</span></h4>
+                <ul>
+                    <li class="english">When weather conditions meet predefined thresholds, smart contract automatically triggers claim process.</li>
+                    <li class="hindi">जब मौसम की स्थिति पूर्वनिर्धारित सीमाओं को पूरा करती है, तो स्मार्ट कॉन्ट्रैक्ट स्वचालित रूप से दावा प्रक्रिया को ट्रिगर करता है।</li>
+                    <li class="english">No manual intervention or paperwork required from farmer's side.</li>
+                    <li class="hindi">किसान की ओर से कोई मैनुअल हस्तक्षेप या कागजी कार्रवाई की आवश्यकता नहीं होती है।</li>
+                    <li class="english">System cross-verifies data from multiple oracles to prevent false triggers.</li>
+                    <li class="hindi">सिस्टम गलत ट्रिगर को रोकने के लिए कई ऑरेकल्स से डेटा का क्रॉस-सत्यापन करता है।</li>
+                </ul>
+            </div>
+
+            <div class="component">
+                <h4><i class="fas fa-hand-holding-usd"></i><span class="english">5. Instant Payout Disbursement</span><span class="hindi">5. तत्काल भुगतान वितरण</span></h4>
+                <ul>
+                    <li class="english">Once claim is validated, payout is instantly transferred to farmer's registered account.</li>
+                    <li class="hindi">एक बार दावा सत्यापित होने के बाद, भुगतान तुरंत किसान के पंजीकृत खाते में स्थानांतरित कर दिया जाता है।</li>
+                    <li class="english">Farmers receive SMS and app notification with payout details.</li>
+                    <li class="hindi">किसानों को भुगतान विवरण के साथ एसएमएस और ऐप सूचना प्राप्त होती है।</li>
+                    <li class="english">Entire process from trigger to payout takes less than 5 minutes.</li>
+                    <li class="hindi">ट्रिगर से भुगतान तक पूरी प्रक्रिया में 5 मिनट से भी कम समय लगता है।</li>
+                </ul>
+            </div>
+
+            <div class="component">
+                <h4><i class="fas fa-hands-helping"></i><span class="english">6. Post-Payout Support</span><span class="hindi">6. भुगतान के बाद समर्थन</span></h4>
+                <ul>
+                    <li class="english">Access to agricultural experts for recovery guidance.</li>
+                    <li class="hindi">पुनर्प्राप्ति मार्गदर्शन के लिए कृषि विशेषज्ञों तक पहुंच।</li>
+                    <li class="english">Resources for replanting, soil recovery, and crop rotation strategies.</li>
+                    <li class="hindi">पुनः रोपण, मिट्टी की पुनर्प्राप्ति, और फसल रोटेशन रणनीतियों के लिए संसाधन।</li>
+                    <li class="english">Community support network for shared learning and experiences.</li>
+                    <li class="hindi">साझा सीखने और अनुभवों के लिए समुदाय समर्थन नेटवर्क।</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="english">Affordable Plans for Every Farmer</h2>
+                <h2 class="hindi">हर किसान के लिए किफायती योजनाएं</h2>
+                <p class="english">Transparent pricing designed to provide peace of mind without financial strain.</p>
+                <p class="hindi">वित्तीय तनाव के बिना मन की शांति प्रदान करने के लिए डिज़ाइन किया गया पारदर्शी मूल्य निर्धारण।</p>
+            </div>
+            <!-- Web3 Interaction Form -->
+            <div class="web3-card fade-in" style="animation-delay: 0.1s;">
+                <h3 class="english">Connect Your Wallet & Enroll</h3>
+                <h3 class="hindi">अपना वॉलेट कनेक्ट करें और नामांकन करें</h3>
+                <button class="btn" id="connectWalletBtn" onclick="connectWallet()">
+                    <span class="english">Connect Wallet</span><span class="hindi">वॉलेट कनेक्ट करें</span>
+                </button>
+                <button class="btn btn-outline" id="disconnectWalletBtn" onclick="disconnectWallet()" style="display:none;">
+                    <span class="english">Disconnect</span><span class="hindi">डिस्कनेक्ट करें</span>
+                </button>
+                <p id="currentAccount" class="web3-status">
+                    <span class="english">Not Connected</span><span class="hindi">कनेक्ट नहीं है</span>
+                </p>
+
+                <form id="enrollmentForm" class="web3-form" style="display:none;">
+                    <label for="cropType" class="english">Crop Type:</label>
+                    <label for="cropType" class="hindi">फसल का प्रकार:</label>
+                    <input type="text" id="cropType" placeholder="e.g., Wheat, Rice" required>
+
+                    <label for="landArea" class="english">Land Area (Sq Meters):</label>
+                    <label for="landArea" class="hindi">भूमि क्षेत्र (वर्ग मीटर):</label>
+                    <input type="number" id="landArea" placeholder="e.g., 1000" min="1" required>
+
+                    <p class="english">Choose your plan:</p>
+                    <p class="hindi">अपनी योजना चुनें:</p>
+
+                    <div class="pricing-cards">
+                        <div class="pricing-card fade-in" style="animation-delay: 0.2s;">
+                            <h3 class="english">Basic Coverage</h3>
+                            <h3 class="hindi">बेसिक कवरेज</h3>
+                            <div class="price">₹400<span class="english">/year</span><span class="hindi">/वर्ष</span></div>
+                            <ul class="pricing-features">
+                                <li><i class="fas fa-check"></i> <span class="english">Up to ₹10,000 coverage</span><span class="hindi">₹10,000 तक का कवरेज</span></li>
+                                <li><i class="fas fa-check"></i> <span class="english">Drought protection</span><span class="hindi">सूखे से सुरक्षा</span></li>
+                                <li><i class="fas fa-check"></i> <span class="english">1 specific crop type</span><span class="hindi">1 विशिष्ट फसल प्रकार</span></li>
+                                <li><i class="fas fa-check"></i> <span class="english">Essential weather data</span><span class="hindi">आवश्यक मौसम डेटा</span></li>
+                            </ul>
+                            <button type="button" class="btn btn-outline english" onclick="enrollInPlan(1)">Select Plan</button>
+                            <button type="button" class="btn btn-outline hindi" onclick="enrollInPlan(1)">योजना चुनें</button>
+                        </div>
+                        <div class="pricing-card popular fade-in" style="animation-delay: 0.5s;">
+                            <div class="popular-badge english">Popular</div>
+                            <div class="popular-badge hindi">लोकप्रिय</div>
+                            <h3 class="english">Standard Coverage</h3>
+                            <h3 class="hindi">मानक कवरेज</h3>
+                            <div class="price">₹700<span class="english">/year</span><span class="hindi">/वर्ष</span></div>
+                            <ul class="pricing-features">
+                                <li><i class="fas fa-check"></i> <span class="english">Up to ₹25,000 coverage</span><span class="hindi">₹25,000 तक का कवरेज</span></li>
+                                <li><i class="fas fa-check"></i> <span class="english">Drought + flood protection</span><span class="hindi">सूखा + बाढ़ सुरक्षा</span></li>
+                                <li><i class="fas fa-check"></i> <span class="english">Up to 3 diverse crop types</span><span class="hindi">3 विविध फसल प्रकार तक</span></li>
+                                <li><i class="fas fa-check"></i> <span class="english">Advanced weather data & analytics</span><span class="hindi">उन्नत मौसम डेटा और विश्लेषण</span></li>
+                                <li><i class="fas fa-check"></i> <span class="english">Timely SMS & App alerts</span><span class="hindi">समय पर एसएमएस और ऐप अलर्ट</span></li>
+                            </ul>
+                            <button type="button" class="btn btn-primary english" onclick="enrollInPlan(2)">Select Plan</button>
+                            <button type="button" class="btn btn-primary hindi" onclick="enrollInPlan(2)">योजना चुनें</button>
+                        </div>
+                        <div class="pricing-card fade-in" style="animation-delay: 0.8s;">
+                            <h3 class="english">Premium Coverage</h3>
+                            <h3 class="hindi">प्रीमियम कवरेज</h3>
+                            <div class="price">₹1,200<span class="english">/year</span><span class="hindi">/वर्ष</span></div>
+                            <ul class="pricing-features">
+                                <li><i class="fas fa-check"></i> <span class="english">Up to ₹50,000 coverage</span><span class="hindi">₹50,000 तक का कवरेज</span></li>
+                                <li><i class="fas fa-check"></i> <span class="english">Comprehensive all weather risks</span><span class="hindi">व्यापक सभी मौसम जोखिम</span></li>
+                                <li><i class="fas fa-check"></i> <span class="english">Unlimited crop types & regions</span><span class="hindi">असीमित फसल प्रकार और क्षेत्र</span></li>
+                                <li><i class="fas fa-check"></i> <span class="english">Hyper-precision weather data & insights</span><span class="hindi">अति-सटीक मौसम डेटा और अंतर्दृष्टि</span></li>
+                                <li><i class="fas fa-check"></i> <span class="english">Dedicated 24/7 priority support</span><span class="hindi">समर्पित 24/7 प्राथमिकता समर्थन</span></li>
+                                <li><i class="fas fa-check"></i> <span class="english">Exclusive IoT sensor integration discount</span><span class="hindi">विशेष आईओटी सेंसर एकीकरण छूट</span></li>
+                            </ul>
+                            <button type="button" class="btn btn-outline english" onclick="enrollInPlan(3)">Select Plan</button>
+                            <button type="button" class="btn btn-outline hindi" onclick="enrollInPlan(3)">योजना चुनें</button>
+                        </div>
+                    </div>
+                    <div id="policyStatusDisplay" class="web3-status" style="display:none;"></div>
+                    <button class="btn btn-primary english" id="claimPayoutBtn" onclick="claimPayout()" style="display:none; margin-top:20px;"><i class="fas fa-hand-holding-usd" style="margin-right: 10px;"></i> Claim Payout</button>
+                    <button class="btn btn-primary hindi" id="claimPayoutBtnHindi" onclick="claimPayout()" style="display:none; margin-top:20px;"><i class="fas fa-hand-holding-usd" style="margin-right: 10px;"></i> भुगतान का दावा करें</button>
+                </form>
+            </div>
+            <!-- Message Box for transaction status -->
+            <div id="messageBox" class="message-box"></div>
+
+            <!-- Admin Controls (For Hackathon Demo) -->
+            <div class="web3-card" id="adminControls">
+                <h4 class="english">Admin Controls (Hackathon Demo Only)</h4>
+                <h4 class="hindi">एडमिन नियंत्रण (केवल हैकाथॉन डेमो के लिए)</h4>
+                <p class="english">Connect with the contract owner's wallet to simulate weather events and manage contract funds.</p>
+                <p class="hindi">मौसम की घटनाओं का अनुकरण करने और अनुबंध निधियों का प्रबंधन करने के लिए अनुबंध स्वामी के वॉलेट से कनेक्ट करें।</p>
+                <form class="web3-form">
+                    <label for="farmerAddressForSimulation" class="english">Farmer Address for Simulation:</label>
+                    <label for="farmerAddressForSimulation" class="hindi">सिमुलेशन के लिए किसान का पता:</label>
+                    <input type="text" id="farmerAddressForSimulation" placeholder="0x..." required>
+
+                    <label for="weatherEventType" class="english">Simulate Weather Event (e.g., Drought, Flood):</label>
+                    <label for="weatherEventType" class="hindi">मौसम की घटना का अनुकरण करें (उदाहरण के लिए, सूखा, बाढ़):</label>
+                    <input type="text" id="weatherEventType" placeholder="e.g., Heavy Rain">
+                    <button type="button" class="btn btn-primary english" onclick="simulateWeatherEvent()"><i class="fas fa-cloud-sun-rain" style="margin-right: 10px;"></i> Simulate Event</button>
+                    <button type="button" class="btn btn-primary hindi" onclick="simulateWeatherEvent()"><i class="fas fa-cloud-sun-rain" style="margin-right: 10px;"></i> घटना का अनुकरण करें</button>
+                    <button type="button" class="btn btn-primary english" onclick="withdrawFunds()" style="margin-top:20px; background-color: var(--error);"><i class="fas fa-dollar-sign" style="margin-right: 10px;"></i> Withdraw Contract Funds</button>
+                    <button type="button" class="btn btn-primary hindi" onclick="withdrawFunds()" style="margin-top:20px; background-color: var(--error);"><i class="fas fa-dollar-sign" style="margin-right: 10px;"></i> अनुबंध से धन निकालें</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="english">Stories of Resilience</h2>
+                <h2 class="hindi">लचीलापन की कहानियाँ</h2>
+                <p class="english">Hear from farmers who found strength and support through Vajra Kavach during challenging times.</p>
+                <p class="hindi">उन किसानों से सुनें जिन्हें चुनौतीपूर्ण समय के दौरान वज्र कवच के माध्यम से शक्ति और समर्थन मिला।</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card fade-in" style="animation-delay: 0.2s;">
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <div class="testimonial-text english">"The unexpected hailstorm was devastating. Vajra Kavacha automatic payout was a true lifeline, helping me recover much faster than I thought possible."</div>
+                    <div class="testimonial-text hindi">"अप्रत्याशित ओलावृष्टि विनाशकारी थी। वज्र कवच का स्वचालित भुगतान एक सच्ची जीवन रेखा थी, जिसने मुझे उम्मीद से कहीं ज्यादा तेजी से ठीक होने में मदद की।"</div>
+                    <div class="testimonial-author">
+                        <img src="https://placehold.co/60x60/A1887F/FFFFFF?text=RP" alt="Ramesh P." class="author-avatar">
+                        <div class="author-info">
+                            <h4>Ramesh P.</h4>
+                            <p class="english">Farmer, Himachal Pradesh</p>
+                            <p class="hindi">किसान, हिमाचल प्रदेश</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card disaster-story fade-in" style="animation-delay: 0.5s;">
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <div class="testimonial-text english">"After the cyclone, I was unsure how to proceed. Vajra Kavacha's instant claim and support resources were a beacon of hope. It's more than money; it's knowing you're not alone."</div>
+                    <div class="testimonial-text hindi">"चक्रवात के बाद, मैं अनिश्चित था कि कैसे आगे बढ़ूं। वज्र कवच का तत्काल दावा और सहायता संसाधन आशा की किरण थे। यह पैसे से कहीं ज़्यादा है; यह जानना है कि आप अकेले नहीं हैं।"</div>
+                    <div class="testimonial-author">
+                        <img src="https://placehold.co/60x60/795548/FFFFFF?text=SD" alt="Sunita D." class="author-avatar">
+                        <div class="author-info">
+                            <h4>Sunita D.</h4>
+                            <p class="english">Coastal Farmer, Andhra Pradesh</p>
+                            <p class="hindi">तटीय किसान, आंध्र प्रदेश</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-in" style="animation-delay: 0.8s;">
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <div class="testimonial-text english">"The transparency of blockchain and the incredible speed of payment are revolutionary. Vajra Kavacha is the future for Indian agriculture."</div>
+                    <div class="testimonial-text hindi">"ब्लॉकचेन की पारदर्शिता और भुगतान की अविश्वसनीय गति क्रांतिकारी है। वज्र कवच भारतीय कृषि का भविष्य है।"</div>
+                    <div class="testimonial-author">
+                        <img src="https://placehold.co/60x60/5D4037/FFFFFF?text=VK" alt="Vijay K." class="author-avatar">
+                        <div class="author-info">
+                            <h4>Vijay K.</h4>
+                            <p class="english">Multi-crop Farmer, Karnataka</p>
+                            <p class="hindi">बहु- फसल किसान, कर्नाटक</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="farmer-resources" id="farmer-resources">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="english">Empowering Our Farmers</h2>
+                <h2 class="hindi">हमारे किसानों को सशक्त बनाना</h2>
+                <p class="english">Access vital information, government schemes, and best practices to enhance your farming techniques and build resilience.</p>
+                <p class="hindi">अपनी खेती की तकनीकों को बढ़ाने और लचीलापन बनाने के लिए महत्वपूर्ण जानकारी, सरकारी योजनाओं और सर्वोत्तम प्रथाओं तक पहुँचें।</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card fade-in" style="animation-delay: 0.2s;">
+                    <div class="feature-icon"><i class="fas fa-leaf"></i></div>
+                    <h3 class="english">Modern Crop Advisories</h3>
+                    <h3 class="hindi">आधुनिक फसल सलाह</h3>
+                    <p class="english">Latest advisories for diverse crops, integrated pest management, and soil enrichment techniques.</p>
+                    <p class="hindi">विविध फसलों, एकीकृत कीट प्रबंधन और मिट्टी संवर्धन तकनीकों के लिए नवीनतम सलाह।</p>
+                    <a href="#" class="btn btn-outline">Read More</a>
+                </div>
+                <div class="feature-card fade-in" style="animation-delay: 0.4s;">
+                    <div class="feature-icon"><i class="fas fa-university"></i></div>
+                    <h3 class="english">Government Initiatives</h3>
+                    <h3 class="hindi">सरकारी पहल</h3>
+                    <p class="english">Comprehensive information on PMFBY, KCC, and other beneficial government schemes for farmers.</p>
+                    <p class="hindi">पीएमएफबीवाई, केसीसी और किसानों के लिए अन्य लाभकारी सरकारी योजनाओं की व्यापक जानकारी।</p>
+                    <a href="#" class="btn btn-outline">Explore Schemes</a>
+                </div>
+                <div class="feature-card fade-in" style="animation-delay: 0.6s;">
+                    <div class="feature-icon"><i class="fas fa-book-reader"></i></div>
+                    <h3 class="english">Digital Knowledge Hub</h3>
+                    <h3 class="hindi">डिजिटल ज्ञान केंद्र</h3>
+                    <p class="english">A rich library of articles and guides on sustainable agriculture, water conservation, and innovative farming.</p>
+                    <p class="hindi">टिकाऊ कृषि, जल संरक्षण और नवीन खेती पर लेखों और गाइडों का एक समृद्ध पुस्तकालय।</p>
+                    <a href="#" class="btn btn-outline">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta" id="contact">
+        <div class="container">
+            <h2 class="english">Stand Strong. Rebuild Together.</h2>
+            <h2 class="hindi">मजबूत खड़े रहें। मिलकर पुनर्निर्माण करें।</h2>
+            <p class="english">Vajra Kavach is your partner in creating a resilient and prosperous agricultural future. Secure your farm with us today.</p>
+            <p class="hindi">वज्र कवच एक लचीला और समृद्ध कृषि भविष्य बनाने में आपका भागीदार है। आज ही हमारे साथ अपने खेत को सुरक्षित करें।</p>
+            <a href="#pricing" class="btn btn-primary empathetic english"><i class="fas fa-hands-helping" style="margin-right: 12px;"></i> Join Vajra Kavacha </a>
+            <a href="#pricing" class="btn btn-primary empathetic hindi"><i class="fas fa-hands-helping" style="margin-right: 12px;"></i> वज्र कवच से जुड़ें</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3 class="english">Vajra Kavacha</h3>
+                    <h3 class="hindi">वज्र कवच</h3>
+                    <p class="english">Pioneering blockchain-powered weather insurance for India's farmers, fostering resilience and security against climatic uncertainties.</p>
+                    <p class="hindi">भारत के किसानों के लिए ब्लॉकचेन-संचालित मौसम बीमा का मार्ग प्रशस्त करना, जलवायु अनिश्चितताओं के खिलाफ लचीलापन और सुरक्षा को बढ़ावा देना।</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3 class="english">Explore</h3>
+                    <h3 class="hindi">अन्वेषण करें</h3>
+                    <ul>
+                        <li><a href="#features" class="english"><i class="fas fa-star link-icon"></i>Features</a><a href="#features" class="hindi"><i class="fas fa-star link-icon"></i>विशेषताएं</a></li>
+                        <li><a href="#how-it-works" class="english"><i class="fas fa-cogs link-icon"></i>How It Works</a><a href="#how-it-works" class="hindi"><i class="fas fa-cogs link-icon"></i>यह कैसे काम करता है</a></li>
+                        <li><a href="#pricing" class="english"><i class="fas fa-dollar-sign link-icon"></i>Pricing</a><a href="#pricing" class="hindi"><i class="fas fa-dollar-sign link-icon"></i>मूल्य निर्धारण</a></li>
+                        <li><a href="#testimonials" class="english"><i class="fas fa-comments link-icon"></i>Testimonials</a><a href="#testimonials" class="hindi"><i class="fas fa-comments link-icon"></i>प्रशंसापत्र</a></li>
+                        <li><a href="#farmer-resources" class="english"><i class="fas fa-book-reader link-icon"></i>Farmer Resources</a><a href="#farmer-resources" class="hindi"><i class="fas fa-book-reader link-icon"></i>किसान संसाधन</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3 class="english">Support & Legal</h3>
+                    <h3 class="hindi">समर्थन और कानूनी</h3>
+                    <ul>
+                        <li><a href="#" class="english"><i class="fas fa-question-circle link-icon"></i>FAQ</a><a href="#" class="hindi"><i class="fas fa-question-circle link-icon"></i>सामान्य प्रश्न</a></li>
+                        <li><a href="#" class="english"><i class="fas fa-headset link-icon"></i>Help Center</a><a href="#" class="hindi"><i class="fas fa-headset link-icon"></i>सहायता केंद्र</a></li>
+                        <li><a href="#" class="english"><i class="fas fa-user-shield link-icon"></i>Privacy Policy</a><a href="#" class="hindi"><i class="fas fa-user-shield link-icon"></i>गोपनीयता नीति</a></li>
+                        <li><a href="#" class="english"><i class="fas fa-file-contract link-icon"></i>Terms of Service</a><a href="#" class="hindi"><i class="fas fa-file-contract link-icon"></i>सेवा की शर्तें</a></li>
+                        <li><a href="#" class="english"><i class="fas fa-ambulance link-icon"></i>Disaster Relief Info</a><a href="#" class="hindi"><i class="fas fa-ambulance link-icon"></i>आपदा राहत सूचना</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3 class="english">Get In Touch</h3>
+                    <h3 class="hindi">संपर्क में रहें</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt" style="margin-right: 10px; width: 20px; color: var(--primary);"></i><span class="english">DIT University, Dehradun</span><span class="hindi">टेक पार्क वन, नई दिल्ली, भारत</span></li>
+                        <li><i class="fas fa-phone-alt" style="margin-right: 10px; width: 20px; color: var(--primary);"></i><span>+91 8340382442</span></li>
+                        <li><i class="fas fa-envelope" style="margin-right: 10px; width: 20px; color: var(--primary);"></i><span>thinktanktokenomis@gmail.com</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="english">&copy; 2024 Vajra Kavach. Empowering Farmers, Securing Futures.</p>
+                <p class="hindi">&copy; 2024 वज्र कवच। किसानों को सशक्त बनाना, भविष्य को सुरक्षित करना।</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- External JavaScript Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.birds.min.js"></script>
+    
+    <script src="script.js"></script>
+</body>
+</html>
